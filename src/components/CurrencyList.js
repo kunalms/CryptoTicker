@@ -13,9 +13,9 @@ export default class CurrencyList extends Component {
 	 }
 
 	 fetchCurrency =()=>{
-	 	axios.get('https://api.coinmarketcap.com/v1/ticker/?limit=250')
-	  		.then(response=>this.setState({currencies:response.data,refreshing:false}));
-	  			console.log(this.state.currencies);
+	 	this.setState({refreshing:true});
+	 	axios.get('https://api.coinmarketcap.com/v1/ticker/?convert='+this.state.Nomination+'&limit=250')
+      	.then(response=>this.setState({currencies:response.data,refreshing:false}));
 	 }
 
 	 updateCurrency = (Nomination) => {
