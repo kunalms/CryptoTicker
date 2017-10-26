@@ -2,13 +2,18 @@ import React from 'react';
 import { Text,View,Image,Linking } from 'react-native';
 
 import {CardSection,Card,Button} from './common';
+import * as FormatUtil from '../Utils/format';
 
 const CurrencyDetails  = ({currency,Nomination})=> {
-
-  const {available_supply,id,last_updated,market_cap_usd,name,percent_change_1h,percent_change_7d,percent_change_24h,price_btc,price_usd,rank,symbol,total_supply}= currency;
   
-  const {thumbnailStyle,headerContentStyle,thumbnailContainerStyle,headerTextStyle,imageStyle}= styles;
-      
+  const {available_supply,id,last_updated,market_cap_usd,name,percent_change_1h,percent_change_7d,percent_change_24h,price_btc,price_usd,rank,symbol,total_supply}= currency;
+   
+  const {thumbnailStyle,headerContentStyle,thumbnailContainerStyle,headerTextStyle,imageStyle,headerContentStyleRight}= styles;
+  
+  const selectedCurrency='price_'+Nomination.toLowerCase();//fetch the index of the selected currency
+
+  const selectedCurrencyPrice=currency[selectedCurrency];//fect the value form props
+
   return (
         <Card>
           <CardSection>
@@ -18,12 +23,12 @@ const CurrencyDetails  = ({currency,Nomination})=> {
 
             <View style={headerContentStyle}>
               <Text style={headerTextStyle}>{name}</Text>
-              <Text>{symbol+' '+percent_change_24h+' %'}</Text>  
+              <Text>{symbol+' '+FormatUtil.getFormattedPercentage(percent_change_24h)}</Text>  
             </View>
 
-            <View style={headerContentStyle}>
-              <Text style={headerTextStyle}>{price_usd+' '+Nomination} </Text>
-              <Text>{'volume'+''}</Text>  
+            <View style={headerContentStyleRight}>
+              <Text>{FormatUtil.getFormattedCurrencyPrice(selectedCurrencyPrice)+' '+Nomination}</Text>
+              <Text>{'volume :'+FormatUtil.getFormattedVolume(currency['24h_volume_usd'])}</Text>  
             </View>
           </CardSection>
 
@@ -36,13 +41,14 @@ const CurrencyDetails  = ({currency,Nomination})=> {
 const styles={
   headerContentStyle: {
     flexDirection:'column',
-    justifyContent:'flex-start',
+    justifyContent:'space-between',
     flex:1
   },
   headerContentStyleRight: {
     flexDirection:'column',
-    justifyContent:'flex-end',
-    flex:1
+    justifyContent:'space-between',
+    alignItems:'flex-end',
+    flex:1,
   },
   headerTextStyle:{
     fontSize:18,

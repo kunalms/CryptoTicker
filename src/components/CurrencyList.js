@@ -1,32 +1,32 @@
 import React, { Component } from 'react';
-import { ScrollView,View,Picker} from 'react-native';
+import { ScrollView,View,Picker, RefreshControl} from 'react-native';
 import axios from 'axios';
 
 import CurrencyDetails from './CurrencyDetails';
 import {Header,Footer} from './common'
 
 export default class CurrencyList extends Component {
-	state={currencies:[],Nomination:'USD'};
+	state={currencies:[],Nomination:'USD',refreshing:true};
 
   	componentWillMount(){
-	  	axios.get('https://api.coinmarketcap.com/v1/ticker/?limit=250')
-	  		.then(response=>this.setState({currencies:response.data}));
+	  	this.fetchCurrency();
+	 }
+
+	 fetchCurrency =()=>{
+	 	axios.get('https://api.coinmarketcap.com/v1/ticker/?limit=250')
+	  		.then(response=>this.setState({currencies:response.data,refreshing:false}));
 	  			console.log(this.state.currencies);
 	 }
 
-
 	 updateCurrency = (Nomination) => {
-	 	this.setState({Nomination:Nomination});
-	 	console.log('https://api.coinmarketcap.com/v1/ticker/?convert='+this.state.Nomination+'&limit=250');
-	 	axios.get('https://api.coinmarketcap.com/v1/ticker/?convert='+this.state.Nomination+'&limit=250')
-      	.then(response=>this.setState({currencies:response.data}));
-	  	
-	  	console.log(this.state.currencies);
+	 	this.setState({Nomination:Nomination,refreshing:true});
+	 	console.log('https://api.coinmarketcap.com/v1/ticker/?convert='+Nomination+'&limit=250');
+	 	axios.get('https://api.coinmarketcap.com/v1/ticker/?convert='+Nomination+'&limit=250')
+      	.then(response=>this.setState({currencies:response.data,refreshing:false}));
    	
    	}
 
 	 renderCurrencies(){
-
 	 	return this.state.currencies.map(currency=>
 	 		<CurrencyDetails  
 	 		 key={currency.id} 
@@ -37,14 +37,16 @@ export default class CurrencyList extends Component {
 
   	render() {
   		console.log(this.state);
-	    console.log(Object.keys(this.state.currencies).length);
 	    return (
 	    	<View style={{flex:1}}>
         	  <Header headerText="CryptoTicker"/>
         
 		    	<View style={{flex:10,marginBottom:35,paddingBottom:10}}>
-		    	<ScrollView >
+		    	<ScrollView 
+		    		refreshControl={<RefreshControl refreshing={this.state.refreshing} onRefresh={this.fetchCurrency.bind(this)}/>}
+		    	>
 		      		{this.renderCurrencies()}
+		      		
 		    	</ScrollView>
 		    	</View>
 
@@ -83,10 +85,6 @@ export default class CurrencyList extends Component {
 		               <Picker.Item label = "Turkish New Lira" value = "TRY" />
 		               <Picker.Item label = "Taiwan Dollar" value = "TWD" />
 		               <Picker.Item label = "South Africa Rand" value = "ZAR" />
-
-
-
-		               <Picker.Item label = "Maria" value = "maria" />
 		            </Picker>
 		          </View>
 		        </Footer>	
