@@ -3,24 +3,29 @@ import { Text,View,Image,Linking } from 'react-native';
 
 import {CardSection,Card,Button} from './common';
 
-const CurrencyDetails  = ({currency})=> {
+const CurrencyDetails  = ({currency,Nomination})=> {
 
-  const {id,name,symbol,rank,price_usd,price_btc,market_cap_usd,available_supply,total_supply,percent_change_1h,percent_change_24h,percent_change_7d,last_updated} = currency;
-
+  const {available_supply,id,last_updated,market_cap_usd,name,percent_change_1h,percent_change_7d,percent_change_24h,price_btc,price_usd,rank,symbol,total_supply}= currency;
+  
   const {thumbnailStyle,headerContentStyle,thumbnailContainerStyle,headerTextStyle,imageStyle}= styles;
+      
   return (
         <Card>
           <CardSection>
             <View style={thumbnailContainerStyle}>
-              <Text> Image </Text>
+              <Image source={{uri:'https://coincap.io/images/coins/'+id+'.png'}} style={thumbnailStyle} />
             </View>
 
             <View style={headerContentStyle}>
               <Text style={headerTextStyle}>{name}</Text>
-              <Text>Rank : {rank}</Text>  
+              <Text>{symbol+' '+percent_change_24h+' %'}</Text>  
+            </View>
+
+            <View style={headerContentStyle}>
+              <Text style={headerTextStyle}>{price_usd+' '+Nomination} </Text>
+              <Text>{'volume'+''}</Text>  
             </View>
           </CardSection>
-
 
 
         </Card>
@@ -31,7 +36,13 @@ const CurrencyDetails  = ({currency})=> {
 const styles={
   headerContentStyle: {
     flexDirection:'column',
-    justifyContent:'space-around'
+    justifyContent:'flex-start',
+    flex:1
+  },
+  headerContentStyleRight: {
+    flexDirection:'column',
+    justifyContent:'flex-end',
+    flex:1
   },
   headerTextStyle:{
     fontSize:18,
