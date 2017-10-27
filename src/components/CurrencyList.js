@@ -6,7 +6,7 @@ import CurrencyDetails from './CurrencyDetails';
 import {Header,Footer} from './common'
 
 export default class CurrencyList extends Component {
-	state={currencies:[],Nomination:'USD',refreshing:true};
+	state={currencies:[],Nomination:'USD',refreshing:true,NumberToFetch:'250'};
 
   	componentWillMount(){
 	  	this.fetchCurrency();
@@ -14,16 +14,31 @@ export default class CurrencyList extends Component {
 
 	 fetchCurrency =()=>{
 	 	this.setState({refreshing:true});
-	 	axios.get('https://api.coinmarketcap.com/v1/ticker/?convert='+this.state.Nomination+'&limit=250')
+	 	axios.get('https://api.coinmarketcap.com/v1/ticker/?convert='+this.state.Nomination+'&limit='+this.state.NumberToFetch)
       	.then(response=>this.setState({currencies:response.data,refreshing:false}));
 	 }
 
 	 updateCurrency = (Nomination) => {
 	 	this.setState({Nomination:Nomination,refreshing:true});
-	 	console.log('https://api.coinmarketcap.com/v1/ticker/?convert='+Nomination+'&limit=250');
-	 	axios.get('https://api.coinmarketcap.com/v1/ticker/?convert='+Nomination+'&limit=250')
+	 	console.log('https://api.coinmarketcap.com/v1/ticker/?convert='+Nomination+'&limit='+this.state.NumberToFetch);
+	 	axios.get('https://api.coinmarketcap.com/v1/ticker/?convert='+Nomination+'&limit='+this.state.NumberToFetch)
       	.then(response=>this.setState({currencies:response.data,refreshing:false}));
    	
+   	}
+
+
+   	updateNumberToFetch = (NumberToFetch) => {
+	 	this.setState({NumberToFetch:NumberToFetch,refreshing:true});
+	 	if(NumberToFetch==='all'){
+		 	console.log('https://api.coinmarketcap.com/v1/ticker/?convert='+this.state.Nomination);
+		 	axios.get('https://api.coinmarketcap.com/v1/ticker/?convert='+this.state.Nomination)
+	      	.then(response=>this.setState({currencies:response.data,refreshing:false}));	
+	 	}
+	 	else{
+		 	console.log('https://api.coinmarketcap.com/v1/ticker/?convert='+this.state.Nomination+'&limit='+NumberToFetch);
+		 	axios.get('https://api.coinmarketcap.com/v1/ticker/?convert='+this.state.Nomination+'&limit='+NumberToFetch)
+	      	.then(response=>this.setState({currencies:response.data,refreshing:false}));
+	   	}
    	}
 
 	 renderCurrencies(){
@@ -52,7 +67,22 @@ export default class CurrencyList extends Component {
 
 		    	<Footer>
 		          <View style={styles.containerStyle}>
-		          	<Picker selectedValue = {this.state.Nomination} onValueChange = {this.updateCurrency}>
+		          	
+		          	<Picker style={styles.pickerStyle} selectedValue={this.state.NumberToFetch} onValueChange={this.updateNumberToFetch.bind(this)}>
+		          		<Picker.Item label="10" value="10"/>
+		          		<Picker.Item label="20" value="20"/>
+		          		<Picker.Item label="50" value="50"/>
+		          		<Picker.Item label="100" value="100"/>
+		          		<Picker.Item label="200" value="200"/>
+		          		<Picker.Item label="250" value="250"/>
+		          		<Picker.Item label="500" value="500"/>
+		          		<Picker.Item label="1000" value="1000"/>
+		          		<Picker.Item label="all" value="all"/>
+		          	</Picker>
+
+
+
+		          	<Picker style={styles.pickerStyle} selectedValue = {this.state.Nomination} onValueChange = {this.updateCurrency.bind(this)}>
 		               <Picker.Item label = "US Dollar" value = "USD" />
 		               <Picker.Item label = "Australian Dollar" value = "AUD" />
 		               <Picker.Item label = "Brazilian Real Chart" value = "BRL" />
@@ -95,13 +125,16 @@ export default class CurrencyList extends Component {
 
 const styles ={
 	containerStyle:{
+		flex:1,
+		flexDirection:'row',
+	},
+
+	pickerStyle:{
 		borderWidth:1,
 		borderRadius:2,
 		borderColor:'#ddd',
 		borderBottomWidth:0,
-
 		width:150,
-
 		shadowColor:'#000',
 		shadowOffset: {width:0,height:0},
 		shadowOpacity:0.2,

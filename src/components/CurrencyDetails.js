@@ -8,7 +8,7 @@ const CurrencyDetails  = ({currency,Nomination})=> {
   
   const {available_supply,id,last_updated,market_cap_usd,name,percent_change_1h,percent_change_7d,percent_change_24h,price_btc,price_usd,rank,symbol,total_supply}= currency;
    
-  const {thumbnailStyle,headerContentStyle,thumbnailContainerStyle,headerTextStyle,imageStyle,headerContentStyleRight}= styles;
+  const {thumbnailStyle,headerContentStyleLeft,thumbnailContainerStyle,headerTextStyle,imageStyle,headerContentStyleRight}= styles;
   
   const selectedCurrency='price_'+Nomination.toLowerCase();//fetch the index of the selected currency
 
@@ -21,7 +21,7 @@ const CurrencyDetails  = ({currency,Nomination})=> {
               <Image source={{uri:'https://coincap.io/images/coins/'+id+'.png'}} style={thumbnailStyle} />
             </View>
 
-            <View style={headerContentStyle}>
+            <View style={headerContentStyleLeft}>
               <Text style={headerTextStyle}>{name}</Text>
               <Text>{symbol+' '+FormatUtil.getFormattedPercentage(percent_change_24h)}</Text>  
             </View>
@@ -39,7 +39,7 @@ const CurrencyDetails  = ({currency,Nomination})=> {
 };
 
 const styles={
-  headerContentStyle: {
+  headerContentStyleLeft: {
     flexDirection:'column',
     justifyContent:'space-between',
     flex:1
