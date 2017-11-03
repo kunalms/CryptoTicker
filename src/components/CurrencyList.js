@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { ScrollView,View,Picker, RefreshControl} from 'react-native';
+import { ScrollView,View,Picker, RefreshControl,Image,TouchableWithoutFeedback} from 'react-native';
 import axios from 'axios';
+
 
 import CurrencyDetails from './CurrencyDetails';
 import {Header,Footer} from './common'
@@ -42,12 +43,18 @@ export default class CurrencyList extends Component {
    	}
 
 	 renderCurrencies(){
+	 	console.log(this.state);
 	 	return this.state.currencies.map(currency=>
 	 		<CurrencyDetails  
 	 		 key={currency.id} 
 	 		 currency={currency} Nomination={this.state.Nomination}/>
 	 	);
 	 }
+
+	 loginWithFacebook = () => {
+  		  alert('It Works');
+ 	 }
+  
 
 
   	render() {
@@ -58,17 +65,24 @@ export default class CurrencyList extends Component {
         
 		    	<View style={{flex:10,marginBottom:35,paddingBottom:10}}>
 		    	<ScrollView 
-		    		refreshControl={<RefreshControl refreshing={this.state.refreshing} onRefresh={this.fetchCurrency.bind(this)}/>}
-		    	>
+		    		refreshControl={<RefreshControl refreshing={this.state.refreshing} 
+		    		onRefresh={this.fetchCurrency.bind(this)} 
+		    		tintColor="#EBEBEB"
+					title="Loading..."
+					colors={['#ff0000', '#00ff00', '#0000ff']}
+					progressBackgroundColor="#EBEBEB"/>}>
 		      		{this.renderCurrencies()}
-		      		
 		    	</ScrollView>
 		    	</View>
 
 		    	<Footer>
 		          <View style={styles.containerStyle}>
-		          	
-		          	<Picker style={styles.pickerStyle} selectedValue={this.state.NumberToFetch} onValueChange={this.updateNumberToFetch.bind(this)}>
+		          	<TouchableWithoutFeedback onPress={this.loginWithFacebook}>
+		          	<Image source={{uri:'https://images.sftcdn.net/images/t_optimized,f_auto/p/341c5968-96d8-11e6-bbd4-00163ec9f5fa/1961917216/github-for-windows-logo.png'}} 
+		          	style={styles.thumbnailStyle} />
+		          	</TouchableWithoutFeedback>
+
+		          	<Picker style={styles.itemPickerStyle} selectedValue={this.state.NumberToFetch} onValueChange={this.updateNumberToFetch.bind(this)}>
 		          		<Picker.Item label="10" value="10"/>
 		          		<Picker.Item label="20" value="20"/>
 		          		<Picker.Item label="50" value="50"/>
@@ -80,9 +94,9 @@ export default class CurrencyList extends Component {
 		          		<Picker.Item label="all" value="all"/>
 		          	</Picker>
 
+		          	
 
-
-		          	<Picker style={styles.pickerStyle} selectedValue = {this.state.Nomination} onValueChange = {this.updateCurrency.bind(this)}>
+		          	<Picker style={styles.currencyPickerStyle} selectedValue = {this.state.Nomination} onValueChange = {this.updateCurrency.bind(this)}>
 		               <Picker.Item label = "US Dollar" value = "USD" />
 		               <Picker.Item label = "Australian Dollar" value = "AUD" />
 		               <Picker.Item label = "Brazilian Real Chart" value = "BRL" />
@@ -127,9 +141,10 @@ const styles ={
 	containerStyle:{
 		flex:1,
 		flexDirection:'row',
+		justifyContent:'space-between'
 	},
 
-	pickerStyle:{
+	currencyPickerStyle:{
 		borderWidth:1,
 		borderRadius:2,
 		borderColor:'#ddd',
@@ -140,11 +155,30 @@ const styles ={
 		shadowOpacity:0.2,
 		shadowRadius:2,
 		elevation:1,
-
 		marginLeft:5,
 		marginRight:5,
 		marginTop:10,
 	},
+	itemPickerStyle:{
+		borderWidth:1,
+		borderRadius:2,
+		borderColor:'#ddd',
+		borderBottomWidth:0,
+		width:100,
+		shadowColor:'#000',
+		shadowOffset: {width:0,height:0},
+		shadowOpacity:0.2,
+		shadowRadius:2,
+		elevation:1,
+		marginLeft:5,
+		marginRight:5,
+		marginTop:10,	
+	},
+	thumbnailStyle:{
+    marginTop:10,
+    height:40,
+    width:40,
+  },
 };
 
 

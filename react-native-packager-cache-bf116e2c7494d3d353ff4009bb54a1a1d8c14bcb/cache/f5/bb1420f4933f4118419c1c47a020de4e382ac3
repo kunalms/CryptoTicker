@@ -1,0 +1,454 @@
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _react2 = require('react');
+
+var _react3 = _interopRequireDefault(_react2);
+
+var _index = require('./../../node_modules/react-transform-hmr/lib/index.js');
+
+var _index2 = _interopRequireDefault(_index);
+
+var _jsxFileName = '/home/kunal/ReactNativeProjects/CryptoTicker/src/components/CurrencyList.js';
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _reactNative = require('react-native');
+
+var _reactNativeElements = require('react-native-elements');
+
+var _axios = require('axios');
+
+var _axios2 = _interopRequireDefault(_axios);
+
+var _CurrencyDetails = require('./CurrencyDetails');
+
+var _CurrencyDetails2 = _interopRequireDefault(_CurrencyDetails);
+
+var _common = require('./common');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _components = {
+	CurrencyList: {
+		displayName: 'CurrencyList'
+	}
+};
+
+var _node_modulesReactTransformHmrLibIndexJs2 = (0, _index2.default)({
+	filename: '/home/kunal/ReactNativeProjects/CryptoTicker/src/components/CurrencyList.js',
+	components: _components,
+	locals: [module],
+	imports: [_react3.default]
+});
+
+function _wrapComponent(id) {
+	return function (Component) {
+		return _node_modulesReactTransformHmrLibIndexJs2(Component, id);
+	};
+}
+
+var CurrencyList = _wrapComponent('CurrencyList')(function (_Component) {
+	_inherits(CurrencyList, _Component);
+
+	function CurrencyList() {
+		var _ref;
+
+		var _temp, _this, _ret;
+
+		_classCallCheck(this, CurrencyList);
+
+		for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+			args[_key] = arguments[_key];
+		}
+
+		return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = CurrencyList.__proto__ || Object.getPrototypeOf(CurrencyList)).call.apply(_ref, [this].concat(args))), _this), _this.state = { currencies: [], Nomination: 'USD', refreshing: true, NumberToFetch: '250' }, _this.fetchCurrency = function () {
+			_this.setState({ refreshing: true });
+			_axios2.default.get('https://api.coinmarketcap.com/v1/ticker/?convert=' + _this.state.Nomination + '&limit=' + _this.state.NumberToFetch).then(function (response) {
+				return _this.setState({ currencies: response.data, refreshing: false });
+			});
+		}, _this.updateCurrency = function (Nomination) {
+			_this.setState({ Nomination: Nomination, refreshing: true });
+			console.log('https://api.coinmarketcap.com/v1/ticker/?convert=' + Nomination + '&limit=' + _this.state.NumberToFetch);
+			_axios2.default.get('https://api.coinmarketcap.com/v1/ticker/?convert=' + Nomination + '&limit=' + _this.state.NumberToFetch).then(function (response) {
+				return _this.setState({ currencies: response.data, refreshing: false });
+			});
+		}, _this.updateNumberToFetch = function (NumberToFetch) {
+			_this.setState({ NumberToFetch: NumberToFetch, refreshing: true });
+			if (NumberToFetch === 'all') {
+				console.log('https://api.coinmarketcap.com/v1/ticker/?convert=' + _this.state.Nomination);
+				_axios2.default.get('https://api.coinmarketcap.com/v1/ticker/?convert=' + _this.state.Nomination).then(function (response) {
+					return _this.setState({ currencies: response.data, refreshing: false });
+				});
+			} else {
+				console.log('https://api.coinmarketcap.com/v1/ticker/?convert=' + _this.state.Nomination + '&limit=' + NumberToFetch);
+				_axios2.default.get('https://api.coinmarketcap.com/v1/ticker/?convert=' + _this.state.Nomination + '&limit=' + NumberToFetch).then(function (response) {
+					return _this.setState({ currencies: response.data, refreshing: false });
+				});
+			}
+		}, _this.loginWithFacebook = function () {
+			alert('It Works');
+		}, _temp), _possibleConstructorReturn(_this, _ret);
+	}
+
+	_createClass(CurrencyList, [{
+		key: 'componentWillMount',
+		value: function componentWillMount() {
+			this.fetchCurrency();
+		}
+	}, {
+		key: 'renderCurrencies',
+		value: function renderCurrencies() {
+			var _this2 = this;
+
+			return this.state.currencies.map(function (currency) {
+				return _react3.default.createElement(_CurrencyDetails2.default, {
+					key: currency.id,
+					currency: currency, Nomination: _this2.state.Nomination, __source: {
+						fileName: _jsxFileName,
+						lineNumber: 48
+					}
+				});
+			});
+		}
+	}, {
+		key: 'render',
+		value: function render() {
+			console.log(this.state);
+			return _react3.default.createElement(
+				_reactNative.View,
+				{ style: { flex: 1 }, __source: {
+						fileName: _jsxFileName,
+						lineNumber: 63
+					}
+				},
+				_react3.default.createElement(_common.Header, { headerText: 'CryptoTicker', __source: {
+						fileName: _jsxFileName,
+						lineNumber: 64
+					}
+				}),
+				_react3.default.createElement(
+					_reactNative.View,
+					{ style: { flex: 10, marginBottom: 35, paddingBottom: 10 }, __source: {
+							fileName: _jsxFileName,
+							lineNumber: 66
+						}
+					},
+					_react3.default.createElement(
+						_reactNative.ScrollView,
+						{
+							refreshControl: _react3.default.createElement(_reactNative.RefreshControl, { refreshing: this.state.refreshing, onRefresh: this.fetchCurrency.bind(this), __source: {
+									fileName: _jsxFileName,
+									lineNumber: 68
+								}
+							}),
+							__source: {
+								fileName: _jsxFileName,
+								lineNumber: 67
+							}
+						},
+						this.renderCurrencies()
+					)
+				),
+				_react3.default.createElement(
+					_common.Footer,
+					{
+						__source: {
+							fileName: _jsxFileName,
+							lineNumber: 75
+						}
+					},
+					_react3.default.createElement(
+						_reactNative.View,
+						{ style: styles.containerStyle, __source: {
+								fileName: _jsxFileName,
+								lineNumber: 76
+							}
+						},
+						_react3.default.createElement(
+							_reactNative.Picker,
+							{ style: styles.itemPickerStyle, selectedValue: this.state.NumberToFetch, onValueChange: this.updateNumberToFetch.bind(this), __source: {
+									fileName: _jsxFileName,
+									lineNumber: 78
+								}
+							},
+							_react3.default.createElement(_reactNative.Picker.Item, { label: '10', value: '10', __source: {
+									fileName: _jsxFileName,
+									lineNumber: 79
+								}
+							}),
+							_react3.default.createElement(_reactNative.Picker.Item, { label: '20', value: '20', __source: {
+									fileName: _jsxFileName,
+									lineNumber: 80
+								}
+							}),
+							_react3.default.createElement(_reactNative.Picker.Item, { label: '50', value: '50', __source: {
+									fileName: _jsxFileName,
+									lineNumber: 81
+								}
+							}),
+							_react3.default.createElement(_reactNative.Picker.Item, { label: '100', value: '100', __source: {
+									fileName: _jsxFileName,
+									lineNumber: 82
+								}
+							}),
+							_react3.default.createElement(_reactNative.Picker.Item, { label: '200', value: '200', __source: {
+									fileName: _jsxFileName,
+									lineNumber: 83
+								}
+							}),
+							_react3.default.createElement(_reactNative.Picker.Item, { label: '250', value: '250', __source: {
+									fileName: _jsxFileName,
+									lineNumber: 84
+								}
+							}),
+							_react3.default.createElement(_reactNative.Picker.Item, { label: '500', value: '500', __source: {
+									fileName: _jsxFileName,
+									lineNumber: 85
+								}
+							}),
+							_react3.default.createElement(_reactNative.Picker.Item, { label: '1000', value: '1000', __source: {
+									fileName: _jsxFileName,
+									lineNumber: 86
+								}
+							}),
+							_react3.default.createElement(_reactNative.Picker.Item, { label: 'all', value: 'all', __source: {
+									fileName: _jsxFileName,
+									lineNumber: 87
+								}
+							})
+						),
+						_react3.default.createElement(_reactNativeElements.SocialIcon, {
+							light: true,
+							type: 'medium',
+							onPress: this.loginWithFacebook,
+							__source: {
+								fileName: _jsxFileName,
+								lineNumber: 90
+							}
+						}),
+						_react3.default.createElement(
+							_reactNative.Picker,
+							{ style: styles.currencyPickerStyle, selectedValue: this.state.Nomination, onValueChange: this.updateCurrency.bind(this), __source: {
+									fileName: _jsxFileName,
+									lineNumber: 96
+								}
+							},
+							_react3.default.createElement(_reactNative.Picker.Item, { label: 'US Dollar', value: 'USD', __source: {
+									fileName: _jsxFileName,
+									lineNumber: 97
+								}
+							}),
+							_react3.default.createElement(_reactNative.Picker.Item, { label: 'Australian Dollar', value: 'AUD', __source: {
+									fileName: _jsxFileName,
+									lineNumber: 98
+								}
+							}),
+							_react3.default.createElement(_reactNative.Picker.Item, { label: 'Brazilian Real Chart', value: 'BRL', __source: {
+									fileName: _jsxFileName,
+									lineNumber: 99
+								}
+							}),
+							_react3.default.createElement(_reactNative.Picker.Item, { label: 'Canadian Dollar', value: 'CAD', __source: {
+									fileName: _jsxFileName,
+									lineNumber: 100
+								}
+							}),
+							_react3.default.createElement(_reactNative.Picker.Item, { label: 'Swiss Franc', value: 'CHF', __source: {
+									fileName: _jsxFileName,
+									lineNumber: 101
+								}
+							}),
+							_react3.default.createElement(_reactNative.Picker.Item, { label: 'Chilean Peso', value: 'CLP', __source: {
+									fileName: _jsxFileName,
+									lineNumber: 102
+								}
+							}),
+							_react3.default.createElement(_reactNative.Picker.Item, { label: 'Chinese Yuan', value: 'CNY', __source: {
+									fileName: _jsxFileName,
+									lineNumber: 103
+								}
+							}),
+							_react3.default.createElement(_reactNative.Picker.Item, { label: 'Czech Koruna', value: 'CZK', __source: {
+									fileName: _jsxFileName,
+									lineNumber: 104
+								}
+							}),
+							_react3.default.createElement(_reactNative.Picker.Item, { label: 'Denmark Krone', value: 'DKK', __source: {
+									fileName: _jsxFileName,
+									lineNumber: 105
+								}
+							}),
+							_react3.default.createElement(_reactNative.Picker.Item, { label: 'Euro', value: 'EUR', __source: {
+									fileName: _jsxFileName,
+									lineNumber: 106
+								}
+							}),
+							_react3.default.createElement(_reactNative.Picker.Item, { label: 'Great Britain Pound', value: 'GBP', __source: {
+									fileName: _jsxFileName,
+									lineNumber: 107
+								}
+							}),
+							_react3.default.createElement(_reactNative.Picker.Item, { label: 'Hong Kong Dollar', value: 'HKD', __source: {
+									fileName: _jsxFileName,
+									lineNumber: 108
+								}
+							}),
+							_react3.default.createElement(_reactNative.Picker.Item, { label: 'Hungary Forint', value: 'HUF', __source: {
+									fileName: _jsxFileName,
+									lineNumber: 109
+								}
+							}),
+							_react3.default.createElement(_reactNative.Picker.Item, { label: 'Indonesia Rupiah', value: 'IDR', __source: {
+									fileName: _jsxFileName,
+									lineNumber: 110
+								}
+							}),
+							_react3.default.createElement(_reactNative.Picker.Item, { label: 'Israel New Shekel', value: 'ILS', __source: {
+									fileName: _jsxFileName,
+									lineNumber: 111
+								}
+							}),
+							_react3.default.createElement(_reactNative.Picker.Item, { label: 'India Rupee', value: 'INR', __source: {
+									fileName: _jsxFileName,
+									lineNumber: 112
+								}
+							}),
+							_react3.default.createElement(_reactNative.Picker.Item, { label: 'Japan Yen', value: 'JPY', __source: {
+									fileName: _jsxFileName,
+									lineNumber: 113
+								}
+							}),
+							_react3.default.createElement(_reactNative.Picker.Item, { label: 'South Korea Won', value: 'KRW', __source: {
+									fileName: _jsxFileName,
+									lineNumber: 114
+								}
+							}),
+							_react3.default.createElement(_reactNative.Picker.Item, { label: 'Mexico Peso', value: 'MXN', __source: {
+									fileName: _jsxFileName,
+									lineNumber: 115
+								}
+							}),
+							_react3.default.createElement(_reactNative.Picker.Item, { label: 'Malaysia Ringgit', value: 'MYR', __source: {
+									fileName: _jsxFileName,
+									lineNumber: 116
+								}
+							}),
+							_react3.default.createElement(_reactNative.Picker.Item, { label: 'Norway Kroner', value: 'NOK', __source: {
+									fileName: _jsxFileName,
+									lineNumber: 117
+								}
+							}),
+							_react3.default.createElement(_reactNative.Picker.Item, { label: 'New Zealand Dollar', value: 'NZD', __source: {
+									fileName: _jsxFileName,
+									lineNumber: 118
+								}
+							}),
+							_react3.default.createElement(_reactNative.Picker.Item, { label: 'Philippines Peso', value: 'PHP', __source: {
+									fileName: _jsxFileName,
+									lineNumber: 119
+								}
+							}),
+							_react3.default.createElement(_reactNative.Picker.Item, { label: 'Pakistan Rupee', value: 'PKR', __source: {
+									fileName: _jsxFileName,
+									lineNumber: 120
+								}
+							}),
+							_react3.default.createElement(_reactNative.Picker.Item, { label: 'Poland Zloty', value: 'PLN', __source: {
+									fileName: _jsxFileName,
+									lineNumber: 121
+								}
+							}),
+							_react3.default.createElement(_reactNative.Picker.Item, { label: 'Russia Rouble', value: 'RUB', __source: {
+									fileName: _jsxFileName,
+									lineNumber: 122
+								}
+							}),
+							_react3.default.createElement(_reactNative.Picker.Item, { label: 'Sweden Krona', value: 'SEK', __source: {
+									fileName: _jsxFileName,
+									lineNumber: 123
+								}
+							}),
+							_react3.default.createElement(_reactNative.Picker.Item, { label: 'Singapore Dollar', value: 'SGD', __source: {
+									fileName: _jsxFileName,
+									lineNumber: 124
+								}
+							}),
+							_react3.default.createElement(_reactNative.Picker.Item, { label: 'Thailand Baht', value: 'THB', __source: {
+									fileName: _jsxFileName,
+									lineNumber: 125
+								}
+							}),
+							_react3.default.createElement(_reactNative.Picker.Item, { label: 'Turkish New Lira', value: 'TRY', __source: {
+									fileName: _jsxFileName,
+									lineNumber: 126
+								}
+							}),
+							_react3.default.createElement(_reactNative.Picker.Item, { label: 'Taiwan Dollar', value: 'TWD', __source: {
+									fileName: _jsxFileName,
+									lineNumber: 127
+								}
+							}),
+							_react3.default.createElement(_reactNative.Picker.Item, { label: 'South Africa Rand', value: 'ZAR', __source: {
+									fileName: _jsxFileName,
+									lineNumber: 128
+								}
+							})
+						)
+					)
+				)
+			);
+		}
+	}]);
+
+	return CurrencyList;
+}(_react2.Component));
+
+exports.default = CurrencyList;
+
+
+var styles = {
+	containerStyle: {
+		flex: 1,
+		flexDirection: 'row',
+		justifyContent: 'space-between'
+	},
+
+	currencyPickerStyle: {
+		borderWidth: 1,
+		borderRadius: 2,
+		borderColor: '#ddd',
+		borderBottomWidth: 0,
+		width: 150,
+		shadowColor: '#000',
+		shadowOffset: { width: 0, height: 0 },
+		shadowOpacity: 0.2,
+		shadowRadius: 2,
+		elevation: 1,
+		marginLeft: 5,
+		marginRight: 5,
+		marginTop: 10
+	},
+	itemPickerStyle: {
+		borderWidth: 1,
+		borderRadius: 2,
+		borderColor: '#ddd',
+		borderBottomWidth: 0,
+		width: 100,
+		shadowColor: '#000',
+		shadowOffset: { width: 0, height: 0 },
+		shadowOpacity: 0.2,
+		shadowRadius: 2,
+		elevation: 1,
+		marginLeft: 5,
+		marginRight: 5,
+		marginTop: 10
+	}
+};

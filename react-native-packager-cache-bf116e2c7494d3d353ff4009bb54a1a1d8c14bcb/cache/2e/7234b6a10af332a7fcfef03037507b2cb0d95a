@@ -1,0 +1,272 @@
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _jsxFileName = '/home/kunal/ReactNativeProjects/CryptoTicker/src/components/CurrencyDetails.js';
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactNative = require('react-native');
+
+var _common = require('./common');
+
+var _format = require('../Utils/format');
+
+var FormatUtil = _interopRequireWildcard(_format);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var CurrencyDetails = function CurrencyDetails(_ref) {
+  var currency = _ref.currency,
+      Nomination = _ref.Nomination;
+  var available_supply = currency.available_supply,
+      id = currency.id,
+      last_updated = currency.last_updated,
+      market_cap_usd = currency.market_cap_usd,
+      name = currency.name,
+      percent_change_1h = currency.percent_change_1h,
+      percent_change_7d = currency.percent_change_7d,
+      percent_change_24h = currency.percent_change_24h,
+      price_btc = currency.price_btc,
+      price_usd = currency.price_usd,
+      rank = currency.rank,
+      symbol = currency.symbol,
+      total_supply = currency.total_supply;
+  var thumbnailStyle = styles.thumbnailStyle,
+      headerContentStyleLeft = styles.headerContentStyleLeft,
+      thumbnailContainerStyle = styles.thumbnailContainerStyle,
+      headerTextStyleGreen = styles.headerTextStyleGreen,
+      headerTextStyleRed = styles.headerTextStyleRed,
+      imageStyle = styles.imageStyle,
+      headerContentStyleRight = styles.headerContentStyleRight,
+      greenText = styles.greenText,
+      redText = styles.redText;
+
+
+  var selectedCurrency = 'price_' + Nomination.toLowerCase();
+
+  var selectedCurrencyPrice = currency[selectedCurrency];
+
+  if (percent_change_24h > 0) {
+
+    return _react2.default.createElement(
+      _common.Card,
+      {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 21
+        }
+      },
+      _react2.default.createElement(
+        _common.CardSection,
+        {
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 22
+          }
+        },
+        _react2.default.createElement(
+          _reactNative.View,
+          { style: thumbnailContainerStyle, __source: {
+              fileName: _jsxFileName,
+              lineNumber: 23
+            }
+          },
+          _react2.default.createElement(_reactNative.Image, { source: { uri: 'https://coincap.io/images/coins/' + id + '.png' }, style: thumbnailStyle, __source: {
+              fileName: _jsxFileName,
+              lineNumber: 24
+            }
+          })
+        ),
+        _react2.default.createElement(
+          _reactNative.View,
+          { style: headerContentStyleLeft, __source: {
+              fileName: _jsxFileName,
+              lineNumber: 27
+            }
+          },
+          _react2.default.createElement(
+            _reactNative.Text,
+            { style: headerTextStyleGreen, __source: {
+                fileName: _jsxFileName,
+                lineNumber: 28
+              }
+            },
+            name
+          ),
+          _react2.default.createElement(
+            _reactNative.Text,
+            { style: greenText, __source: {
+                fileName: _jsxFileName,
+                lineNumber: 29
+              }
+            },
+            symbol + ' ' + FormatUtil.getFormattedPercentage(percent_change_24h)
+          )
+        ),
+        _react2.default.createElement(
+          _reactNative.View,
+          { style: headerContentStyleRight, __source: {
+              fileName: _jsxFileName,
+              lineNumber: 32
+            }
+          },
+          _react2.default.createElement(
+            _reactNative.Text,
+            { style: greenText, __source: {
+                fileName: _jsxFileName,
+                lineNumber: 33
+              }
+            },
+            FormatUtil.getFormattedCurrencyPrice(selectedCurrencyPrice) + ' ' + Nomination
+          ),
+          _react2.default.createElement(
+            _reactNative.Text,
+            { style: greenText, __source: {
+                fileName: _jsxFileName,
+                lineNumber: 34
+              }
+            },
+            'volume :' + FormatUtil.getFormattedVolume(currency['24h_volume_usd'])
+          )
+        )
+      )
+    );
+  } else {
+    return _react2.default.createElement(
+      _common.Card,
+      {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 44
+        }
+      },
+      _react2.default.createElement(
+        _common.CardSection,
+        {
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 45
+          }
+        },
+        _react2.default.createElement(
+          _reactNative.View,
+          { style: thumbnailContainerStyle, __source: {
+              fileName: _jsxFileName,
+              lineNumber: 46
+            }
+          },
+          _react2.default.createElement(_reactNative.Image, { source: { uri: 'https://coincap.io/images/coins/' + id + '.png' }, style: thumbnailStyle, __source: {
+              fileName: _jsxFileName,
+              lineNumber: 47
+            }
+          })
+        ),
+        _react2.default.createElement(
+          _reactNative.View,
+          { style: headerContentStyleLeft, __source: {
+              fileName: _jsxFileName,
+              lineNumber: 50
+            }
+          },
+          _react2.default.createElement(
+            _reactNative.Text,
+            { style: headerTextStyleRed, __source: {
+                fileName: _jsxFileName,
+                lineNumber: 51
+              }
+            },
+            name
+          ),
+          _react2.default.createElement(
+            _reactNative.Text,
+            { style: redText, __source: {
+                fileName: _jsxFileName,
+                lineNumber: 52
+              }
+            },
+            symbol + ' ' + FormatUtil.getFormattedPercentage(percent_change_24h)
+          )
+        ),
+        _react2.default.createElement(
+          _reactNative.View,
+          { style: headerContentStyleRight, __source: {
+              fileName: _jsxFileName,
+              lineNumber: 55
+            }
+          },
+          _react2.default.createElement(
+            _reactNative.Text,
+            { style: redText, __source: {
+                fileName: _jsxFileName,
+                lineNumber: 56
+              }
+            },
+            FormatUtil.getFormattedCurrencyPrice(selectedCurrencyPrice) + ' ' + Nomination
+          ),
+          _react2.default.createElement(
+            _reactNative.Text,
+            { style: redText, __source: {
+                fileName: _jsxFileName,
+                lineNumber: 57
+              }
+            },
+            'volume :' + FormatUtil.getFormattedVolume(currency['24h_volume_usd'])
+          )
+        )
+      )
+    );
+  }
+};
+
+var styles = {
+
+  headerContentStyleLeft: {
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    flex: 1
+  },
+  headerContentStyleRight: {
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    alignItems: 'flex-end',
+    flex: 1
+  },
+  headerTextStyleGreen: {
+    fontSize: 18,
+    color: 'green'
+  },
+  headerTextStyleRed: {
+    fontSize: 18,
+    color: 'red'
+  },
+  greenText: {
+    color: 'green'
+  },
+  redText: {
+    color: 'red'
+  },
+  thumbnailStyle: {
+    height: 50,
+    width: 50
+  },
+  thumbnailContainerStyle: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 10,
+    marginRight: 10
+
+  },
+
+  imageStyle: {
+    height: 300,
+    flex: 1,
+    width: null
+
+  }
+};
+
+exports.default = CurrencyDetails;

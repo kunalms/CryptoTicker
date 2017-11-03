@@ -1,0 +1,31 @@
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getFormattedPercentage = exports.getFormattedCurrencyPriceShort = exports.getFormattedCurrencyPrice = exports.getFormattedBTCPrice = exports.getFormattedVolume = exports.isPositive = undefined;
+
+var _numeral = require('numeral');
+
+var _numeral2 = _interopRequireDefault(_numeral);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var isPositive = exports.isPositive = function isPositive(value) {
+  return value >= 0;
+};
+var getFormattedVolume = exports.getFormattedVolume = function getFormattedVolume(volume) {
+  return (0, _numeral2.default)(volume).format('0.0a').toUpperCase();
+};
+var getFormattedBTCPrice = exports.getFormattedBTCPrice = function getFormattedBTCPrice(price) {
+  return price === 1 ? 1 : (0, _numeral2.default)(price).format('0,0.000000');
+};
+var getFormattedCurrencyPrice = exports.getFormattedCurrencyPrice = function getFormattedCurrencyPrice(price) {
+  return (0, _numeral2.default)(price).format('0,0.0000');
+};
+var getFormattedCurrencyPriceShort = exports.getFormattedCurrencyPriceShort = function getFormattedCurrencyPriceShort(price) {
+  return (0, _numeral2.default)(price).format('0,0.00');
+};
+
+var getFormattedPercentage = exports.getFormattedPercentage = function getFormattedPercentage(value) {
+  var formattedValue = (0, _numeral2.default)(value / 100).format('0.00%');
+  if (isPositive(value)) return '+' + formattedValue;else return formattedValue;
+};

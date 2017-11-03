@@ -1,0 +1,49 @@
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.Card = undefined;
+var _jsxFileName = '/home/kunal/ReactNativeProjects/CryptoTicker/src/components/common/Card.js';
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactNative = require('react-native');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Card = function Card(props) {
+	return _react2.default.createElement(
+		_reactNative.View,
+		{ style: styles.containerStyle, __source: {
+				fileName: _jsxFileName,
+				lineNumber: 7
+			}
+		},
+		props.children
+	);
+};
+
+var styles = {
+	containerStyle: {
+		borderWidth: 1,
+		borderRadius: 4,
+		borderColor: '#ddd',
+		borderBottomWidth: 0,
+
+		justifyContent: 'space-between',
+
+		shadowColor: '#000',
+		shadowOffset: { width: 0, height: 0 },
+		shadowOpacity: 0.2,
+		shadowRadius: 4,
+		elevation: 3,
+
+		marginLeft: 5,
+		marginRight: 5,
+		marginTop: 10
+
+	}
+};
+
+exports.Card = Card;

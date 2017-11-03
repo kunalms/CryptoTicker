@@ -8,13 +8,16 @@ const CurrencyDetails  = ({currency,Nomination})=> {
   
   const {available_supply,id,last_updated,market_cap_usd,name,percent_change_1h,percent_change_7d,percent_change_24h,price_btc,price_usd,rank,symbol,total_supply}= currency;
    
-  const {thumbnailStyle,headerContentStyleLeft,thumbnailContainerStyle,headerTextStyle,imageStyle,headerContentStyleRight}= styles;
+  const {thumbnailStyle,headerContentStyleLeft,thumbnailContainerStyle,headerTextStyleGreen,
+    headerTextStyleRed,imageStyle,headerContentStyleRight,greenText,redText}= styles;
   
   const selectedCurrency='price_'+Nomination.toLowerCase();//fetch the index of the selected currency
 
-  const selectedCurrencyPrice=currency[selectedCurrency];//fect the value form props
+  const selectedCurrencyPrice=currency[selectedCurrency];//fetch the value form props
 
-  return (
+  if(percent_change_24h>0){
+
+    return (
         <Card>
           <CardSection>
             <View style={thumbnailContainerStyle}>
@@ -22,23 +25,48 @@ const CurrencyDetails  = ({currency,Nomination})=> {
             </View>
 
             <View style={headerContentStyleLeft}>
-              <Text style={headerTextStyle}>{name}</Text>
-              <Text>{symbol+' '+FormatUtil.getFormattedPercentage(percent_change_24h)}</Text>  
+              <Text style={headerTextStyleGreen}>{name}</Text>
+              <Text style={greenText}>{symbol+' '+FormatUtil.getFormattedPercentage(percent_change_24h)}</Text>  
             </View>
 
             <View style={headerContentStyleRight}>
-              <Text>{FormatUtil.getFormattedCurrencyPrice(selectedCurrencyPrice)+' '+Nomination}</Text>
-              <Text>{'volume :'+FormatUtil.getFormattedVolume(currency['24h_volume_usd'])}</Text>  
+              <Text style={greenText}>{FormatUtil.getFormattedCurrencyPrice(selectedCurrencyPrice)+' '+Nomination}</Text>
+              <Text style={greenText}>{'volume :'+FormatUtil.getFormattedVolume(currency['24h_volume_usd'])}</Text>  
             </View>
           </CardSection>
 
 
         </Card>
     );
+  }
+  else{
+    return (
+        <Card>
+          <CardSection>
+            <View style={thumbnailContainerStyle}>
+              <Image source={{uri:'https://coincap.io/images/coins/'+id+'.png'}} style={thumbnailStyle} />
+            </View>
+
+            <View style={headerContentStyleLeft}>
+              <Text style={headerTextStyleRed}>{name}</Text>
+              <Text style={redText}>{symbol+' '+FormatUtil.getFormattedPercentage(percent_change_24h)}</Text>  
+            </View>
+
+            <View style={headerContentStyleRight}>
+              <Text style={redText}>{FormatUtil.getFormattedCurrencyPrice(selectedCurrencyPrice)+' '+Nomination}</Text>
+              <Text style={redText}>{'volume :'+FormatUtil.getFormattedVolume(currency['24h_volume_usd'])}</Text>  
+            </View>
+          </CardSection>
+        </Card>
+    );
+  }
+
+  
 
 };
 
 const styles={
+  
   headerContentStyleLeft: {
     flexDirection:'column',
     justifyContent:'space-between',
@@ -50,8 +78,19 @@ const styles={
     alignItems:'flex-end',
     flex:1,
   },
-  headerTextStyle:{
+  headerTextStyleGreen:{
     fontSize:18,
+    color:'green',
+  },
+  headerTextStyleRed:{
+    fontSize:18,
+    color:'red',
+  },
+  greenText:{
+    color:'green',
+  },
+  redText:{
+    color:'red',
   },
   thumbnailStyle:{
     height:50,
