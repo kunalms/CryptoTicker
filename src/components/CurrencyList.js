@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView,View,Picker, RefreshControl,Image,TouchableWithoutFeedback} from 'react-native';
+import { ScrollView,View,Picker, RefreshControl,Image,TouchableWithoutFeedback,Linking} from 'react-native';
 import axios from 'axios';
 
 
@@ -7,7 +7,7 @@ import CurrencyDetails from './CurrencyDetails';
 import {Header,Footer} from './common'
 
 export default class CurrencyList extends Component {
-	state={currencies:[],Nomination:'USD',refreshing:true,NumberToFetch:'250'};
+	state={currencies:[],Nomination:'USD',refreshing:true,NumberToFetch:'50'};
 
   	componentWillMount(){
 	  	this.fetchCurrency();
@@ -31,8 +31,8 @@ export default class CurrencyList extends Component {
    	updateNumberToFetch = (NumberToFetch) => {
 	 	this.setState({NumberToFetch:NumberToFetch,refreshing:true});
 	 	if(NumberToFetch==='all'){
-		 	console.log('https://api.coinmarketcap.com/v1/ticker/?convert='+this.state.Nomination);
-		 	axios.get('https://api.coinmarketcap.com/v1/ticker/?convert='+this.state.Nomination)
+		 	console.log('https://api.coinmarketcap.com/v1/ticker/?convert='+this.state.Nomination+'&limit=0');
+		 	axios.get('https://api.coinmarketcap.com/v1/ticker/?convert='+this.state.Nomination+'&limit=0')
 	      	.then(response=>this.setState({currencies:response.data,refreshing:false}));	
 	 	}
 	 	else{
@@ -51,9 +51,6 @@ export default class CurrencyList extends Component {
 	 	);
 	 }
 
-	 loginWithFacebook = () => {
-  		  alert('It Works');
- 	 }
   
 
 
@@ -63,7 +60,7 @@ export default class CurrencyList extends Component {
 	    	<View style={{flex:1}}>
         	  <Header headerText="CryptoTicker"/>
         
-		    	<View style={{flex:10,marginBottom:35,paddingBottom:10}}>
+		    	<View style={{flex:10,marginBottom:45,paddingBottom:5	}}>
 		    	<ScrollView 
 		    		refreshControl={<RefreshControl refreshing={this.state.refreshing} 
 		    		onRefresh={this.fetchCurrency.bind(this)} 
@@ -77,10 +74,7 @@ export default class CurrencyList extends Component {
 
 		    	<Footer>
 		          <View style={styles.containerStyle}>
-		          	<TouchableWithoutFeedback onPress={this.loginWithFacebook}>
-		          	<Image source={{uri:'https://images.sftcdn.net/images/t_optimized,f_auto/p/341c5968-96d8-11e6-bbd4-00163ec9f5fa/1961917216/github-for-windows-logo.png'}} 
-		          	style={styles.thumbnailStyle} />
-		          	</TouchableWithoutFeedback>
+		          	
 
 		          	<Picker style={styles.itemPickerStyle} selectedValue={this.state.NumberToFetch} onValueChange={this.updateNumberToFetch.bind(this)}>
 		          		<Picker.Item label="10" value="10"/>
@@ -94,6 +88,10 @@ export default class CurrencyList extends Component {
 		          		<Picker.Item label="all" value="all"/>
 		          	</Picker>
 
+		          	<TouchableWithoutFeedback onPress={()=> Linking.openURL('https://github.com/kunalsharma6996/CryptoTicker')}>
+		          	<Image source={{uri:'https://images.sftcdn.net/images/t_optimized,f_auto/p/341c5968-96d8-11e6-bbd4-00163ec9f5fa/1961917216/github-for-windows-logo.png'}} 
+		          	style={styles.thumbnailStyle} />
+		          	</TouchableWithoutFeedback>
 		          	
 
 		          	<Picker style={styles.currencyPickerStyle} selectedValue = {this.state.Nomination} onValueChange = {this.updateCurrency.bind(this)}>
