@@ -11,8 +11,8 @@ Cryptoticker is a simple cross platform mobile application for keeping track of 
 
 # Features!
 
-  - Load diffrent number of currencies on the go
-  - Conversions from 
+  - Load different number of currencies on the go
+  - Conversions from crypto currencies to other currencies
 
 
 
@@ -40,9 +40,14 @@ anyone having an account on apple store and is willing to host it on the same fe
 
 Want to contribute? Great!
 
-CryptoTicker is a simple application that is built using react native.
+CryptoTicker is a simple application that is built using react native if you have basic knowledge of react native you can easily understand and contirbute to project.
 
-PS: I am still learning react native so the code might not be standard.
+special thanks to :
+>Harsh Vakharia [harshjv](https://github.com/harshjv) for his guidance.
+>[CryptoTicker](https://play.google.com/store/apps/details?id=com.cryptoticker) is mobile version of [Donut](https://github.com/harshjv/donut) developed by him.
+
+
+*PS: I am still learning react native so the code might not be standard.*
 
 ScreenShots
 ----
